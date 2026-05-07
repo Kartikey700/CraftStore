@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { useCart } from "@/lib/cart-context"
 
-export function Header() {
+export function Footer() {
   const { total, setIsOpen } = useCart()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="w-full border-b bg-white">
+    <footer className="w-full border-t bg-white">
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
 
         {/* Logo */}
@@ -53,6 +53,6 @@ export function Header() {
           <a href="/about">About</a>
         </div>
       )}
-    </header>
+    </footer>
   )
 }
