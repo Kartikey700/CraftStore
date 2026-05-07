@@ -1,116 +1,58 @@
-import { Gamepad2 } from "lucide-react"
-import Link from "next/link"
+"use client"
 
-const footerLinks = {
-  store: [
-    { label: "All Products", href: "#products" },
-    { label: "Ranks", href: "#categories" },
-    { label: "Crate Keys", href: "#categories" },
-    { label: "Equipment", href: "#categories" },
-  ],
-  support: [
-    { label: "FAQ", href: "#faq" },
-    { label: "Contact Us", href: "#" },
-    { label: "Discord", href: "#" },
-    { label: "Support Ticket", href: "#" },
-  ],
-  legal: [
-    { label: "Terms of Service", href: "#" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Refund Policy", href: "#" },
-  ],
-}
+import { useState } from "react"
+import { useCart } from "@/lib/cart-context"
 
-export function Footer() {
+export function Header() {
+  const { total, setIsOpen } = useCart()
+  const [mobileOpen, setMobileOpen] = useState(false)
+
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <Gamepad2 className="h-6 w-6 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold tracking-tight">
-                Craft<span className="text-primary">Store</span>
-              </span>
-            </Link>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Premium Minecraft server items with instant delivery. Trusted by thousands of players worldwide.
-            </p>
-          </div>
+    <header className="w-full border-b bg-white">
+      <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
 
-          {/* Store Links */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Store
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.store.map(link => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Logo */}
+        <h1 className="text-xl font-bold">CraftStore</h1>
 
-          {/* Support Links */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Support
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.support.map(link => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex gap-6">
+          <a href="/">Home</a>
+          <a href="/shop">Shop</a>
+          <a href="/about">About</a>
+        </nav>
 
-          {/* Legal Links */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Legal
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.legal.map(link => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        {/* Cart Button */}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="relative px-4 py-2 bg-black text-white rounded"
+        >
+          Cart
 
-        {/* Bottom Bar */}
-        <div className="mt-12 border-t border-border pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} CraftStore. All rights reserved.
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Not affiliated with Mojang Studios or Microsoft.
-            </p>
-          </div>
-        </div>
+          {/* Show TOTAL price (since your context uses total) */}
+          {total > 0 && (
+            <span className="ml-2 bg-white text-black px-2 py-0.5 rounded text-sm">
+              ₹{total}
+            </span>
+          )}
+        </button>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          ☰
+        </button>
       </div>
-    </footer>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden p-4 flex flex-col gap-3 border-t">
+          <a href="/">Home</a>
+          <a href="/shop">Shop</a>
+          <a href="/about">About</a>
+        </div>
+      )}
+    </header>
   )
 }
