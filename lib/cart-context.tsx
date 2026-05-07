@@ -17,6 +17,7 @@ type CartType = {
   removeItem: (id: string) => void
   clearCart: () => void
   total: number
+  totalItems: number
 }
 
 const CartContext = createContext<CartType | null>(null)
@@ -57,7 +58,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   removeItem,
   clearCart,
   total,
-  
+  totalItems: items.reduce((s, i) => s + i.qty, 0)
 }}>
     
       {children}
