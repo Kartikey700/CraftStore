@@ -15,7 +15,8 @@ const navLinks = [
 ]
 
 export function Header() {
-  const { totalItems, setIsOpen } = useCart()
+ const { items, setIsOpen } = useCart()
+const totalItems = items.length
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
